@@ -1,6 +1,33 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    <h1>All Products</h1>
-}
+﻿@using Eshop.ViewModels.Product
+@model List<ListProductVm>
+
+<p style="color:green"> @TempData["Message"]</p>
+<h1>محصولات</h1>
+
+
+<table class="table table-sm table-bordered">
+    <tr><th>نام کالا</th><th>توضیح کوتاه</th><th>کمپانی</th><th>دسته بندی ها</th><th>عملیات</th></tr>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.Title</td>
+            <td>@product.ShortDescription</td>
+            <td>@product.Company.Title</td>
+            <td>
+                @foreach (var category in product.Categories)
+                {
+                    <span>@(category.Title),</span>
+                }
+            </td>
+            <td>
+                <form asp-action="AddToBasket" asp-controller="ShoppingCard" method="POST">
+                    <input asp-for="@product.Id" class="form-control" name="Id" type="hidden" />
+                    <input asp-for="@product." class="form-control" name="Count" type="hidden" />
+                    <div class="nav-link text-dark">
+                        <input type="submit" value="افزودن به سبد" class="btn btn-primary" />
+                    </div>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

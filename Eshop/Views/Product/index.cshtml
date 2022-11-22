@@ -1,6 +1,35 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    <h1>Admin All Products</h1>
-}
+﻿@using Eshop.ViewModels.Product
+@model List<ListProductVm>
+
+<p style="color:green"> @TempData["Message"]</p>
+<h1>Admin All Products</h1>
+
+<a class="btn btn-primary" asp-action="Add" asp-controller="Product">اضافه کردن کالا</a>
+
+<table class="table table-sm table-bordered">
+    <tr><th>نام کالا</th><th>توضیح کوتاه</th><th>کمپانی</th><th>دسته بندی ها</th><th>عملیات</th></tr>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.Title</td>
+            <td>@product.ShortDescription</td>
+            <td>@product.Company.Title</td>
+            <td>
+                @foreach (var category in product.Categories)
+                {
+                    <span>@(category.Title),</span>
+                }
+            </td>
+            <td>
+                <form asp-action="Delete" method="POST">
+                    <input asp-for="@product.Id" class="form-control" name="Id" type="hidden" />
+                    <div class="nav-link text-dark">
+                        <input type="submit" value="حذف" class="btn btn-primary" />
+                    </div>
+                </form>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" style="display:inline">ویرایش</a> |
+                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id" style="display:inline">جزئیات</a>
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,31 @@
+﻿@using Eshop.ViewModels.Product
+@model List<ListShoppingCardVm>
+
+<p style="color:green"> @TempData["Message"]</p>
+<h1>سبد خرید</h1>
+
+<a class="btn btn-primary" asp-action="RemoveItems" asp-controller="ShoppingCard">خالی کردن کل سبد</a>
+<form asp-action="Payment" asp-controller="Order" method="POST">
+    <div class="nav-link text-dark">
+        <input type="submit" value="پرداخت" class="btn btn-primary" />
+    </div>
+</form>
+
+<table class="table table-sm table-bordered">
+    <tr><th>نام کالا</th><th>تعداد</th><th>عملیات</th></tr>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.Title</td>
+            <td>@product.Count</td>
+            <td>
+                <form asp-action="RemoveFromBasket" method="POST">
+                    <input asp-for="@product.Id" class="form-control" name="Id" type="hidden" />
+                    <div class="nav-link text-dark">
+                        <input type="submit" value="حذف از سبد" class="btn btn-primary" />
+                    </div>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

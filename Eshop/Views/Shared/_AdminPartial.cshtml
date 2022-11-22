@@ -1,13 +1,14 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+﻿@using Eshop.Data.Account
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 <div style="
     display: flex;
     flex-wrap: wrap;
     line-height: 20px;
 ">
-    @if (SignInManager.IsSignedIn(User))
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
     {
         <a asp-area="" asp-controller="Product"
        asp-action="Index" title="Manage">Products Management </a>

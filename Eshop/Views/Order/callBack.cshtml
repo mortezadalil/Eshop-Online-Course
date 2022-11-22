@@ -1,0 +1,17 @@
+﻿@using Eshop.Data.Models
+@model OrderStatus
+
+@switch (Model)
+{
+    case OrderStatus.Success:
+        <h1>موفقیت آمیز بود</h1>
+        break;
+    case OrderStatus.Failed:
+        <h1>موفقیت آمیز نبود</h1>
+        break;
+    case OrderStatus.Cancelled:
+        <h1>لغو شده</h1>
+        break;
+    default:
+        break;
+}

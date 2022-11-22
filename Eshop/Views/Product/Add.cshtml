@@ -1,0 +1,59 @@
+﻿@using Eshop.ViewModels.Account
+@model AddProductVm
+
+<h1>Add User</h1>
+
+<div class="row">
+    <div class="col-md-4">
+
+        <form asp-action="Add">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+
+            <div class="form-group">
+                <label asp-for="@Model.Title" class="control-label"></label>
+                <input asp-for="@Model.Title" class="form-control" />
+                <span asp-validation-for="@Model.Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.ShortDescription" class="control-label"></label>
+                <input asp-for="@Model.ShortDescription" class="form-control" />
+                <span asp-validation-for="@Model.ShortDescription" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.Description" class="control-label"></label>
+                <input asp-for="@Model.Description" class="form-control" />
+                <span asp-validation-for="@Model.Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.Price" class="control-label"></label>
+                <input asp-for="@Model.Price" class="form-control" />
+                <span asp-validation-for="@Model.Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <select asp-for="@Model.CompanyId" asp-items="@((List<SelectListItem>)ViewData["Companies"])">
+                    <option value=0>هیچ کدام</option>
+                </select>
+                <span asp-validation-for="@Model.CompanyId" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group">
+                <select asp-for="@Model.CategoryIds" asp-items="@((List<SelectListItem>)ViewData["Categories"])">
+                    <option value=0>هیچ کدام</option>
+                </select>
+                <span asp-validation-for="@Model.CategoryIds" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="افزودن کالا" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+</div>

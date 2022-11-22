@@ -1,6 +1,35 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    <h1>Admin All Users</h1>
-}
+﻿@using Eshop.ViewModels.Account
+@model List<ListItemUserVm>
+
+<p style="color:green"> @TempData["Message"]</p>
+<h1>Admin All Users</h1>
+
+<a class="btn btn-primary" asp-action="Add" asp-controller="Account">اضافه کردن کاربر</a>
+
+<table class="table table-sm table-bordered">
+    <tr><th>نام</th><th>نام خانوادگی</th><th>نام کاربری</th><th>نقش</th><th>عملیات</th></tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.FirstName</td>
+            <td>@user.LastName</td>
+            <td>@user.UserName</td>
+            <td>
+                @foreach (var roleName in user.Roles)
+                {
+                    <p>@Html.DisplayFor(model=>roleName)&nbsp;</p>
+                }
+            </td>
+            <td>
+                 <form asp-action="Delete" method="POST">
+                    <input asp-for="@user.Id" class="form-control" name="Id" type="hidden" />
+                    <div class="nav-link text-dark">
+                        <input type="submit" value="حذف" class="btn btn-primary" />
+                    </div>
+                </form> 
+                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Edit" asp-route-id="@user.Id" style="display:inline">ویرایش</a> |
+                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Detail" asp-route-id="@user.Id" style="display:inline">جزئیات</a>
+            </td>
+        </tr>
+    }
+</table>

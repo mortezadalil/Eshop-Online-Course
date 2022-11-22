@@ -1,37 +1,50 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+﻿@using Eshop.Data.Account
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" 
-        asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" 
-        asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
-    <li><a  class="nav-link text-dark" asp-area="" asp-controller="Account" 
-        asp-action="Profile" title="Manage">Profile</a></li>
-    <li><a  class="nav-link text-dark" asp-area="" asp-controller="ShoppingCard" 
-        asp-action="Index" title="Manage">Shopping Card</a></li>
-    <li><a  class="nav-link text-dark" asp-area="" asp-controller="ShoppingCard"
-           asp-action="Transactions" title="Manage">Transactions</a>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            @if (!User.IsInRole("Admin"))
+            {
+                <a class="nav-link text-dark" title="Manage">@User.Identity?.Name! سلام</a>
+            }
+            else
+            {
+                <a class="nav-link text-dark" title="Manage">سلام رئیس</a>
+                <span>@((User.Claims).FirstOrDefault(c => c.Type == "phoneServer").Value)</span>
+            }
+
         </li>
-    <li><a  class="nav-link text-dark" asp-area="" asp-controller="ShoppingCard"
-           asp-action="Transactions" title="Manage">Admin Management</a></li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
+        <li class="nav-item">
+            <form class="form-inline" asp-area=""
+              asp-controller="Account" asp-action="Logout">
+                <button type="submit" class="nav-link btn btn-link text-dark">خروج</button>
+            </form>
+        </li>
+        <li>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Account"
+           asp-action="Profile" title="Manage">پروفایل</a>
+        </li>
+        <li>
+            <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCard"
+           asp-action="Index" title="Manage">سبد خرید</a>
+        </li>
+        <li>
+            <a class="nav-link text-dark" asp-area="" asp-controller="ShoppingCard"
+           asp-action="Transactions" title="Manage">تراکنش های مالی</a>
+        </li>
+
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">ثبت نام</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">ورود</a>
+        </li>
+    }
 </ul>
